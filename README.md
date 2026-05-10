@@ -1,65 +1,161 @@
 # Numerical_Friedmann_fate_of_universe
-Numerical integration of the Friedmann equations to simulate cosmic evolution across different density parameters. Assessing the role of each element in the geometry and dynamics of the universe.
+
+Numerical integration of the Friedmann equations to simulate cosmic evolution across different cosmological density parameters. This project investigates the role of radiation, matter, curvature, and dark energy in determining the geometry, expansion history, and ultimate fate of the universe.
+
 ## The Physics
-The whole cosmos can be described as an evolving system using two equation named the Friedmann equations followed as:
 
-$$(\frac{\dot a}{a})^2 = \frac{8\pi G}{3} \rho - \frac{k}{a^2} + \frac{\Lambda}{3} $$
+The large-scale evolution of the universe can be described by the Friedmann equations:
 
-$$\frac{\ddot a}{a} = \frac{-4\pi G}{3} (\rho + 3P) + \frac{\Lambda}{3}$$
+$$
+\left(\frac{\dot a}{a}\right)^2 = \frac{8\pi G}{3}\rho - \frac{k}{a^2} + \frac{\Lambda}{3}
+$$
 
-where
+$$
+\frac{\ddot a}{a} = -\frac{4\pi G}{3}(\rho + 3P) + \frac{\Lambda}{3}
+$$
 
-a = scale factor
+where:
 
-$$\rho$$ = energy density
+- \(a\) : scale factor
+- \(\rho\) : energy density
+- \(P\) : pressure
+- \(k\) : spatial curvature
+- \(\Lambda\) : cosmological constant (dark energy)
 
-p = pressure
+The first equation describes the expansion rate of the universe, while the second equation (also known as the Raychaudhuri equation) describes the acceleration or deceleration of cosmic expansion.
 
-k = curvature
+Although these equations appear straightforward, the energy density is itself time-dependent:
 
-$$\Lambda$$ = cosmological constant (also known as the dark energy)
+$$
+\rho = \rho(t)
+$$
 
-The first equation explores the rate of expansion whereas the second one (also known as Raychadhuri equation) is focused on the accellaration of the exapnsion. While integrating these equations seems easy at first sight, one must keep in mind that $$\rho=\rho(t)$$, so integrating is not possible unless we know the dependancy of energy density on time. A simpler form of the two equations can be written using the equation of state and defining a density parameter:
+Therefore, solving the Friedmann equations requires understanding how each component evolves as the universe expands.
 
+## Density Parameters and Normalized Friedmann Equation
 
-$$\Omega =\frac{\rho}{\rho_c}=\frac{3H_0^2 \rho}{8 \pi G}$$
+To simplify the equations, cosmology defines the critical density:
 
-plus the relationship between the density of each element in the universe (Radiation, Matter, Cosmological constant) and the rate of growth of scale factor. Therefore the Friedmann equations will take the following form, respectively:
+$$
+\rho_c = \frac{3H_0^2}{8\pi G}
+$$
 
-$$(\frac{\dot a}{a})^2=H_0^2 (\Omega_r a^{-4} + \Omega_m a^{-3} - \Omega_k a^-{2} + \Omega_\Lambda)$$
+and the density parameter:
 
-$$\frac{\ddot a}{a}= H_0^2(\frac{-1}{2}\Omega_m a^-3 + \Omega_\Lambda)$$
+$$
+\Omega = \frac{\rho}{\rho_c} = \frac{8\pi G\rho}{3H_0^2}
+$$
 
-These two equations can be used to assess the change of scale factor of the universe, or in another words, its fate. The amount of the $$\Omega_{total}$$ gives us the geometry of universe as:
+Each component evolves differently with respect to the scale factor according to its equation of state:
 
-$$\Omega_{total} < 1 :$$ Open Universe
+$$
+\rho_r \propto a^{-4}
+$$
 
-$$\Omega_{total} = 1 :$$ Flat Universe
+$$
+\rho_m \propto a^{-3}
+$$
 
-$$\Omega_{total} > 1 :$$ Closed Universe
+$$
+\rho_k \propto a^{-2}
+$$
 
-Though as we see in further calculation, the total density parameter only has a role in determining the geometry, while the real fate of universe (big crunch, big rip, etc) is depending on the individual contributions of each component to the total density. Meaning, the ratio of matter, cosmological constant and curvature specifies the ultimate fate of the universe. In the following project, we are first going to take a deeper insight into the role of each element and then plot the fate of universe for hypothetical cosmological models.
+$$
+\rho_\Lambda = \text{constant}
+$$
 
-## Domination of Elements
+where radiation scales as \(a^{-4}\), matter scales as \(a^{-3}\), curvature scales as \(a^{-2}\), and dark energy remains constant.
 
-Each component based on its equation of state, scales differently with respect to a:
+Using these relations, the normalized Friedmann equation becomes
 
-$$\rho_r\propto a^{-4}$$
+$$
+\left(\frac{H(a)}{H_0}\right)^2 = \Omega_r a^{-4} + \Omega_m a^{-3} + \Omega_k a^{-2} + \Omega_\Lambda
+$$
 
-$$\rho_m\propto a^{-3}$$
+where the curvature density parameter is defined as
 
-$$\rho_c\propto a^{-2}$$
+$$
+\Omega_k = -\frac{k}{a_0^2 H_0^2}
+$$
 
-$$\rho_\Lambda=const$$
+with \(a_0 = 1\) at the present epoch.
 
-Therefore, one can plot the normalized density parameter equation vs the scale factor to see the domination era of each component. As the first step, we use Planck 2018 cosmological parameters [(Aghanim et al. 2018)](https://arxiv.org/abs/1807.06209) :
+The acceleration equation becomes
 
-$$\Omega_r = 9.24\times10^{-5}$$
+$$
+\frac{\ddot a}{a} = H_0^2\left(-\Omega_r a^{-4} - \frac{1}{2}\Omega_m a^{-3} + \Omega_\Lambda\right)
+$$
 
-$$\Omega_m = 0.315$$
+## Curvature Constraint and Geometry of the Universe
 
-$$\Omega_k = 0$$
+Evaluating the Friedmann equation at the present epoch leads to the normalization condition
 
-$$\Omega_\Lambda = 0.685$$
+$$
+\Omega_r + \Omega_m + \Omega_\Lambda + \Omega_k = 1
+$$
 
-to have the plot that is found in the standard textbooks. Keep in mind that the plot is in logarithmic scales:
+Therefore, the curvature contribution is not fully independent and can be computed through
+
+$$
+\Omega_k = 1 - (\Omega_r + \Omega_m + \Omega_\Lambda)
+$$
+
+The total density parameter is defined as
+
+$$
+\Omega_{\text{total}} = \Omega_r + \Omega_m + \Omega_\Lambda
+$$
+
+and determines the spatial geometry of the universe:
+
+- $$\Omega_{\text{total}} < 1$$ : Open universe
+- $$\Omega_{\text{total}} = 1$$ : Flat universe
+- $$\Omega_{\text{total}} > 1$$ : Closed universe
+
+Equivalently:
+
+- $$\Omega_k > 0$$ : Open universe
+- $$\Omega_k = 0$$ : Flat universe
+- $$\Omega_k < 0$$ : Closed universe
+
+Although geometry is determined by the total density parameter, the ultimate fate of the universe depends on the relative contributions of each component. Universes with identical geometry may evolve very differently depending on the balance between matter, curvature, and dark energy.
+
+This project explores both realistic and hypothetical cosmological models by varying the density parameters while maintaining consistency with the Friedmann normalization condition.
+
+## Domination of Cosmological Components
+
+Since each component evolves differently with the scale factor, different eras of cosmic history become dominated by different energy components.
+
+Using the Planck 2018 cosmological parameters [(Aghanim et al. 2018)](https://arxiv.org/abs/1807.06209):
+
+$$
+\Omega_r = 9.24\times10^{-5}
+$$
+
+$$
+\Omega_m = 0.315
+$$
+
+$$
+\Omega_k = 0
+$$
+
+$$
+\Omega_\Lambda = 0.685
+$$
+
+we recover the standard \(\Lambda\)CDM cosmological model.
+
+The following logarithmic plot illustrates the evolution of each component with the scale factor:
+
+![plot](figures/lambda-cdm-component-dominance.png)
+
+As expected, the universe begins with a short radiation-dominated era, followed by matter domination, and eventually transitions into dark-energy domination at late times.
+
+The standard \(\Lambda\)CDM model assumes a spatially flat universe (\(\Omega_k = 0\)). However, observational constraints only require
+
+$$
+\Omega_{\text{total}} = 1 \pm \epsilon
+$$
+
+allowing the possibility of a small but non-zero curvature contribution. This motivates investigating how open and closed cosmological models modify the expansion history and dominance eras of the universe.
